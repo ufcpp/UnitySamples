@@ -1,0 +1,32 @@
+Unity Editor crush with fixed statement compiled by VS 15.5 Preview
+
+1. What happened
+
+The Unity editor crushes.
+
+2. How we can reproduce it using the example you attached
+
+Run, then immediately this project will crush.
+
+3. Cause
+
+This crush is caused by the Class1.Unsafe method in the Lib/Class1.cs.
+This method contains `fixed (char* ps = s)` where `s` is `string`.
+
+The crush occurs only if the Class1.cs is compiled by Visual Studio 15.5 Preview.
+If you replace Lib155.dll by Lib154.dll (compiled by VS 15.4), there is no crush.
+
+Lib/154.il and Lib/155.il are decompilation results from Lib/Lib154.dll and Lib/Lib155.dll respectively.
+Difference between them is:
+
+***** .\154.il
+    IL_0003:  ldloc.1
+    IL_0004:  conv.i
+    IL_0005:  stloc.0
+***** .\155.IL
+    IL_0003:  ldloc.1
+    IL_0004:  conv.u
+    IL_0005:  stloc.0
+*****
+
+conv.i in 154.il is changed to conv.u in 155.il.
