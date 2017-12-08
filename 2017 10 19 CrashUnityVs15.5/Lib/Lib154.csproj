@@ -5,4 +5,8 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="out/**/*" />
+  </ItemGroup>
+
 </Project>

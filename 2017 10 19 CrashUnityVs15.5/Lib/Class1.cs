@@ -1,4 +1,4 @@
-public class Class1
+﻿public class Class1
 {
     public static unsafe int Unsafe(string s)
     {
